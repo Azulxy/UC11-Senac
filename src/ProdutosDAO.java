@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.sql.DriverManager;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
 
 
 public class ProdutosDAO {
@@ -40,6 +41,30 @@ public class ProdutosDAO {
         } catch (SQLException e) {
             throw new RuntimeException("Erro ao cadastrar o produto: " + e.getMessage(), e);
         }
-    }   
+    }
+    
+    public List<ProdutosDTO> listarProdutos() {
+        
+        List<ProdutosDTO> produtos = new ArrayList<>();
+        String sql = "SELECT * FROM produtos";
+    
+        try (Connection conn = DriverManager.getConnection("jdbc:mariadb://localhost:3306/uc11", "root", "123");
+             PreparedStatement pstmt = conn.prepareStatement(sql);
+             ResultSet rs = pstmt.executeQuery()) {
+
+            while (rs.next()) {
+                ProdutosDTO produto = new ProdutosDTO();
+                produto.setId(rs.getInt("id"));
+                produto.setNome(rs.getString("nome"));
+                produto.setValor(rs.getInt("valor"));
+                produto.setStatus(rs.getString("status"));
+                produtos.add(produto);
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao listar produtos: " + e.getMessage(), e);
+        }
+        return produtos;
+    }
 }
 

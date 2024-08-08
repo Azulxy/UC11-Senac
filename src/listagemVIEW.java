@@ -1,5 +1,6 @@
 
 import java.util.ArrayList;
+import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
 /*
@@ -18,6 +19,14 @@ public class listagemVIEW extends javax.swing.JFrame {
      */
     public listagemVIEW() {
         initComponents();
+
+        // Adiciona um listener para o evento de abertura da janela
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
     }
 
     /**
@@ -152,6 +161,28 @@ public class listagemVIEW extends javax.swing.JFrame {
         new cadastroVIEW().setVisible(true);
     }//GEN-LAST:event_btnVoltarActionPerformed
 
+    private void carregarProdutos() {
+        ProdutosDAO produtosDAO = new ProdutosDAO();
+        List<ProdutosDTO> produtos = produtosDAO.listarProdutos();
+        
+        DefaultTableModel model = (DefaultTableModel) listaProdutos.getModel();
+        model.setRowCount(0); // Limpa a tabela
+
+        for (ProdutosDTO produto : produtos) {
+            model.addRow(new Object[]{
+                produto.getId(),
+                produto.getNome(),
+                produto.getValor(),
+                produto.getStatus()
+            });
+        }
+    }
+    
+    // Método chamado quando a tela é inicializada
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {                                 
+        carregarProdutos(); // Carrega produtos na tabela
+    }
+    
     /**
      * @param args the command line arguments
      */
