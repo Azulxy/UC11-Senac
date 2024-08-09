@@ -39,6 +39,7 @@ public class vendasVIEW extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         BtnVoltar = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -62,27 +63,35 @@ public class vendasVIEW extends javax.swing.JFrame {
             }
         });
 
+        jLabel1.setFont(new java.awt.Font("Lucida Fax", 0, 18)); // NOI18N
+        jLabel1.setText("Produtos Vendidos");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(BtnVoltar)
-                .addGap(45, 45, 45))
             .addGroup(layout.createSequentialGroup()
-                .addGap(25, 25, 25)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 485, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(26, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 485, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(440, 440, 440)
+                            .addComponent(BtnVoltar))
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(185, 185, 185)
+                            .addComponent(jLabel1))))
+                .addGap(0, 28, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(30, 30, 30)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(35, 35, 35)
+                .addComponent(jLabel1)
+                .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 130, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 99, Short.MAX_VALUE)
                 .addComponent(BtnVoltar)
-                .addGap(23, 23, 23))
+                .addGap(25, 25, 25))
         );
 
         pack();
@@ -107,7 +116,7 @@ public class vendasVIEW extends javax.swing.JFrame {
     
     public List<ProdutosDTO> listarProdutosVendidos() {
         List<ProdutosDTO> produtos = new ArrayList<>();
-        String sql = "SELECT * FROM produtos WHERE status = 'vendido'";
+        String sql = "SELECT * FROM produtos WHERE status = 'Vendido'";
     
         try (Connection conn = DriverManager.getConnection("jdbc:mariadb://localhost:3306/uc11", "root", "123");
              PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -140,6 +149,7 @@ public class vendasVIEW extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BtnVoltar;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
