@@ -26,6 +26,26 @@ public class ProdutosDAO {
     ResultSet resultset;
     ArrayList<ProdutosDTO> listagem = new ArrayList<>();
     
+    public void venderProduto(int produtoId) {
+        String sql = "UPDATE produtos SET status = 'vendido' WHERE id = ?";
+        
+        try (Connection conn = DriverManager.getConnection("jdbc:mariadb://localhost:3306/uc11", "root", "123");
+            PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, produtoId);
+            
+            int rowsAffected = pstmt.executeUpdate();
+            
+            if (rowsAffected > 0) {
+                JOptionPane.showMessageDialog(null, "Produto vendido com sucesso!");
+            } else {
+                JOptionPane.showMessageDialog(null, "Produto não encontrado.");
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao vender o produto: " + e.getMessage(), e);
+        }
+    } 
+    
     public void cadastrarProduto (ProdutosDTO produto){
         String sql = "INSERT INTO produtos (nome, valor, status) VALUES (?, ?, ?)";
 
